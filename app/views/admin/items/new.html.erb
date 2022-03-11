@@ -1,0 +1,10 @@
+<h1>商品新規登録</h1>
+<%= form_with @item, url: new_admin_item_path, method: :post do |f| %>
+<span>商品画像</span><%= f.file_field :image %>
+<span>商品名</span><%= f.text_field :name, placeholder: "商品名" %>
+<span>商品説明</span><%= f.text_area :introduction, placeholder: "ここに説明文を記入します" %>
+<span>ジャンル</span><%# TODO ジャンル選択 %>
+<span>税抜価格</span><%= f.text_field :price, placeholder: "1000" %>円
+<span>販売ステータス</span><%# TODO ジャンル選択 %>
+<%= f.submit "新規登録" %>
+<% end %>
