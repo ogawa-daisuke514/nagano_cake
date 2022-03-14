@@ -1,2 +1,5 @@
-<h1>Admin::Items#edit</h1>
-<p>Find me in app/views/admin/items/edit.html.erb</p>
+<h1>商品編集</h1>
+<%= form_with model: @item, url: admin_item_path(@item), method: :patch do |f| %>
+  <%= render "form", f: f %>
+  <%= f.submit "変更を保存" %>
+<% end %>

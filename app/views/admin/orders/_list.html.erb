@@ -1,0 +1,19 @@
+<h1><%= title %></h1>
+<table>
+  <thead>
+    <tr>
+      <th>購入日時</th>
+      <th>注文個数</th>
+      <th>注文ステータス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% orsers.each do |od| %>
+    <tr>
+      <td><%= link_to od.created_at.strftime('%Y/%m/%d %T'), admin_order_path(od) %></td>
+      <td><%= od.amount %></td>
+      <td><%=  %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

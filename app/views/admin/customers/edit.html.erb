@@ -1,26 +1,16 @@
-<h2>新規会員登録</h2>
-
-<%= form_with(model:@customer, url: registration_path(resource_name)) do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
+<h1><%= "#{@customer.last_name}#{@customer.first_name}さんの会員情報編集" %></h1>
+<%= form_with(model:@customer, url: admin_customer_path(@customer), method: :patch) do |f| %>
+  <%= render "public/shared/error_messages", resource: @customer %>
 
   <div class="field">
-    <span>名前</span>
-    <%= f.label :last_name, "(姓)" %>
+    <span>氏名</span>
     <%= f.text_field :last_name, autofocus: true, placeholder: "長野", autocomplete: "last_name" %>
-    <%= f.label :first_name, "(名)" %>
     <%= f.text_field :first_name, placeholder: "惠喜", autocomplete: "first_name" %>
   </div>
   <div>
     <span>フリガナ</span>
-    <%= f.label :last_name_kana, "(セイ)" %>
     <%= f.text_field :last_name_kana, placeholder: "ナガノ", autocomplete: "last_name_kana" %>
-    <%= f.label :first_name_kana, "(メイ)" %>
     <%= f.text_field :first_name_kana, placeholder: "ケイキ", autocomplete: "first_name_kana" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %>
-    <%= f.email_field :email, placeholder: "mail@example.com", autocomplete: "email" %>
   </div>
 
   <div class="field">
@@ -39,18 +29,19 @@
   </div>
 
   <div class="field">
-    <%= f.label :password, "パスワード(6文字以上)" %>
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.label :email, "メールアドレス" %>
+    <%= f.email_field :email, placeholder: "mail@example.com", autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation, "パスワード(確認用)" %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.label :is_active, "会員ステータス" %>
+    <% [true, false].each do |st| %>
+      <%= f.radio_button :is_active, st %>
+      <%= f.label :is_active, @customer.get_status_string(st) %>
+    <% end %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "変更を保存" %>
   </div>
 <% end %>
-
-<%= render "public/shared/links" %>
