@@ -3,7 +3,7 @@ class Admin::CustomersController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @customers = Customer.all
+    @customers = Customer.page(params[:page])
   end
 
   def show
@@ -25,7 +25,7 @@ class Admin::CustomersController < ApplicationController
 
   def orders
     @customer = Customer.find(params[:id])
-    @orders = @customer.orders
+    @orders = @customer.orders.page(params[:page])
   end
 
   protected

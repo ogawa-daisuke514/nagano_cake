@@ -3,17 +3,24 @@
   <thead>
     <tr>
       <th>購入日時</th>
+      <% if show_customer %>
+      <th>購入者</th>
+      <% end %>
       <th>注文個数</th>
       <th>注文ステータス</th>
     </tr>
   </thead>
   <tbody>
-    <% orsers.each do |od| %>
+    <% orders.each do |od| %>
     <tr>
       <td><%= link_to od.created_at.strftime('%Y/%m/%d %T'), admin_order_path(od) %></td>
+      <% if show_customer %>
+      <td><%= od.customer %></td>
+      <% end %>
       <td><%= od.amount %></td>
-      <td><%=  %></td>
+      <td><%= od.od_status %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate orders %>
