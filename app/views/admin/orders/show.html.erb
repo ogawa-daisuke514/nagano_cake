@@ -1,2 +1,55 @@
-<h1>Admin::Orders#show</h1>
-<p>Find me in app/views/admin/orders/show.html.erb</p>
+<h2>注文履歴詳細</h2>
+<div>
+  <div>購入者</div>
+  <div><%= link_to @order.customer.full_name, admin_customer_path(@order.customer) %></div>
+</div>
+<div>
+  <div>注文日</div>
+  <div><%= @order.created_at.strftime('%Y/%m/%d') %></div>
+</div>
+<div>
+  <div>配送先</div>
+  <div><%= @order.address_display(false) %></div>
+  <div><%= @order.name %></div>
+</div>
+<div>
+  <div>支払方法</div>
+  <div><%= @order.payment %></div>
+</div>
+<div>
+  <div>注文ステータス</div>
+  <div>
+  <%= form_with model: @order, url: admin_order_path(@order), method: :patch do |f| %>
+    <%= f.select :order_status, Order.order_statuses_i18n.invert %>
+    <%= f.submit "更新" %>
+  <% end %>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>商品名</th>
+        <th>単価(税込)</th>
+        <th>数量</th>
+        <th>小計</th>
+        <th>制作ステータス</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.order_items.each do |oi| %>
+      <tr>
+        <td><%= oi.item.name %></td>
+        <td><%= oi.tax_included_price %></td>
+        <td><%= oi.amount %></td>
+        <td><%= oi.subtotal %></td>
+        <td>
+          <%= form_with model: oi, url: admin_order_item_path(oi), method: :patch do |f| %>
+            <%= f.select :production_status, OrderItem.production_statuses_i18n.invert %>
+            <%= f.submit "更新" %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

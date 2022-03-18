@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
 
+  scope module: :public do
+
+    get 'items/genre/:id' => "items#genre", as: "items_genre"
+    resources :items, only: [:index, :show]
+
+    post 'orders/confirm', as: "orders_confirm"
+    get 'orders/thanks', as: "orders_thanks"
+    resources :orders, only: [:new, :index, :show, :create]
+  end
   root to: 'public/homes#top'
 
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
@@ -11,6 +20,7 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
+    patch "order_items/:id" => "order_items#update", as: "order_item"
     resources :orders, only: [:index, :show, :update]
     get "customers/:id/orders" => "customers#orders", as: "customer_orders"
     resources :customers, only: [:index, :edit, :show, :update]

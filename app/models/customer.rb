@@ -15,6 +15,10 @@ class Customer < ApplicationRecord
   validates :address, presence: true
   validates :telephone_number, presence: true
 
+  def address_display(with_name)
+    "〒#{postal_code} #{address}" + (with_name ? " #{name}" : "")
+  end
+
   def full_name
     last_name + first_name
   end

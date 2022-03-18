@@ -15,7 +15,7 @@
     <tr>
       <td><%= link_to od.created_at.strftime('%Y/%m/%d %T'), admin_order_path(od) %></td>
       <% if show_customer %>
-      <td><%= od.customer %></td>
+      <td><%= od.customer.full_name %></td>
       <% end %>
       <td><%= od.amount %></td>
       <td><%= od.od_status %></td>
