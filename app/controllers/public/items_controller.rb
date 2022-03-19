@@ -1,4 +1,5 @@
 class Public::ItemsController < ApplicationController
+  # ログイン不要
   def index
     all = Item.all
     @items_count = all.size
@@ -13,7 +14,6 @@ class Public::ItemsController < ApplicationController
     all_genre = Item.where(genre: find_genre)
     @items_count = all_genre.size
     @items = Kaminari.paginate_array(all_genre).page(params[:page]).per(8)
-    binding.pry
     render :index
   end
 end

@@ -8,10 +8,10 @@ class Public::OrdersController < ApplicationController
     @order = Order.new
   end
 
-  def create
+  def confirm
   end
 
-  def confirm
+  def create
   end
 
   def thanks

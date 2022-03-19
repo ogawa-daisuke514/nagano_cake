@@ -9,14 +9,25 @@ class Public::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    cp = params[:customer]
+    customer = Customer.find_by(email: cp[:email])
+    if customer && customer.valid_password?(cp[:password]) && !customer.is_active
+      redirect_to new_customer_registration_path, alert: "あなたは退会済みユーザーです。新規登録を行ってください(同じメールアドレスは使用できません)。"
+    else
+      super
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
   #   super
   # end
+  def withdraw_destroy
+    destroy
+    #フラッシュメッセージを上書き
+    flash[:notice] = "正常に退会しました。"
+  end
 
   # protected
 

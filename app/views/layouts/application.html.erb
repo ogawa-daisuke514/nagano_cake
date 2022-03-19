@@ -12,20 +12,49 @@
 
   <body>
     <header>
-      <% if admin_signed_in? %>
-        [admin-id: <%= current_admin.id %>]
-        <%= link_to "ログアウト", destroy_admin_session_path, method: :delete  %>
-      <% elsif customer_signed_in? %>
-        <%= "ようこそ、#{current_customer.last_name} #{current_customer.first_name} さん" %>
-        <%= link_to "ログアウト", destroy_customer_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "ログイン", new_customer_session_path %>
-      <% end %>
+      <h1>
+        <%= link_to (admin_signed_in? ? admin_root_path : root_path) do %>
+          LOGO
+        <% end %>
+      </h1>
+      <div>
+        <% if admin_signed_in? %>
+          <nav>
+            <div><%= link_to "商品一覧", admin_items_path %></div>
+            <div><%= link_to "会員一覧", admin_customers_path %></div>
+            <div><%= link_to "注文履歴一覧", admin_orders_path %></div>
+            <div><%= link_to "ジャンル一覧", admin_genres_path %></div>
+            <div><%= link_to "ログアウト", destroy_admin_session_path, method: :delete  %></div>
+          </nav>
+        <% elsif customer_signed_in? %>
+          <div>
+            <%= "ようこそ、#{current_customer.last_name} さん" %>
+          </div>
+          <nav>
+            <div><%= link_to "マイページ", my_page_path %></div>
+            <div><%= link_to "商品一覧", items_path %></div>
+            <div><%= link_to "カート", cart_items_path %></div>
+            <div><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></div>
+          </nav>
+        <% else %>
+          <nav>
+            <div><%= link_to "About", about_path %></div>
+            <div><%= link_to "商品一覧", items_path %></div>
+            <div><%= link_to "新規登録", new_customer_registration_path %></div>
+            <div><%= link_to "ログイン", new_customer_session_path %></div>
+          </nav>
+        <% end %>
+        <div>
+          (検索窓)
+        </div>
+      </div>
     </header>
     <main>
       <p><%= flash.now[:alert] %></p>
       <p><%= flash.now[:notice] %></p>
+      <%= yield %>
     </main>
-    <%= yield %>
+    <footer>
+    </footer>
   </body>
 </html>
