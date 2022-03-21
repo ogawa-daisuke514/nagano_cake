@@ -1,6 +1,6 @@
 <h2>配送先登録/一覧</h2>
 <div>
-<%= form_with model: @address, url: addresses_path, method: :post %>
+<%= form_with model: @address, url: addresses_path, method: :post, local: true do |f| %>
   <%= render "form", f: f %>
   <%= f.submit "新規登録" %>
 <% end %>

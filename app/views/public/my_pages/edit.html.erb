@@ -1,5 +1,5 @@
 <h2>会員情報編集</h2>
-<%= form_with(model: current_customer, url: my_page_path(current_customer), method: :patch) do |f| %>
+<%= form_with(model: current_customer, url: my_page_path(current_customer), method: :patch, local: true) do |f| %>
   <%= render "public/shared/error_messages", resource: current_customer %>
 
   <div class="field">

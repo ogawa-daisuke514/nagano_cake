@@ -7,10 +7,25 @@ class Order < ApplicationRecord
   enum payment_method: { credit_card: 0, transfer: 1 }
   enum order_status: { wait_for_deposit: 0, confirmed_deposit: 1, in_production: 2, in_packing: 3, shipped: 4 }
 
+  validates :name, presence: true
+  validates :postal_code, presence: true
+  validates :address, presence: true
+  validates :postage, presence: true
+  validates :total_fee, presence: true
+  validates :payment_method, presence: true
+
+  def now_postage
+    800
+  end
+
+  def address_valid?
+    @address.present? && @postal_code.present? && @name.present?
+  end
+
   def address_display(with_name)
     "〒#{postal_code} #{address}" + (with_name ? " #{name}" : "")
   end
-  
+
   def payment
     get_payment_str(payment_method)
   end

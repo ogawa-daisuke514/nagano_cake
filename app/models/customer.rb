@@ -15,6 +15,18 @@ class Customer < ApplicationRecord
   validates :address, presence: true
   validates :telephone_number, presence: true
 
+  def cart_total
+    cart_items.sum{|ci| ci.subtotal }
+  end
+
+  def order_items
+    cart_items.map{|ci| ci.to_order_item }
+  end
+
+  def destroy_all_cart
+    cart_items.each{|ci| ci.destroy }
+  end
+
   def address_display(with_name)
     "〒#{postal_code} #{address}" + (with_name ? " #{name}" : "")
   end

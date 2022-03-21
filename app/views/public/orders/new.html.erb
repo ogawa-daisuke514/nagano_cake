@@ -1,4 +1,4 @@
-<%= form_with model: @order, url: orders_confirm_path, method: :post do |f| %>
+<%= form_with model: @order, url: orders_confirm_path, local: true, method: :post, local: true do |f| %>
   <h2>支払方法</h2>
   <% Order.payment_methods.each do |k, v| %>
     <%= f.radio_button :payment_method, k %>
@@ -7,30 +7,35 @@
   <h2>お届け先</h2>
   <div>
     <div>
-      <%= f.radio_button :address_type, 0 %>
+      <%= f.radio_button :address_type, 0, checked: @address_type == 0 %>
       <%= f.label :address_type, "ご自身の住所" %>
     </div>
     <div><%= current_customer.address_display(false) %></div>
     <div><%= current_customer.full_name %></div>
   </div>
   <div>
-    <%= f.radio_button :address_type, 1 %>
+    <% empty = (current_customer.addresses.size == 0) %>
+    <%= f.radio_button :address_type, 1, disabled: empty, checked: @address_type == 1 %>
     <%= f.label :address_type, "登録済み住所から選択" %><br>
     <%= f.select :address_id, options_from_collection_for_select(current_customer.addresses, :id, :address_one_line) %>
   </div>
   <div>
     <div>
-      <%= f.radio_button :address_type, 2 %>
+      <%= f.radio_button :address_type, 2, checked: @address_type == 2 %>
       <%= f.label :address_type, "新しいお届け先" %>
     </div>
-    <div>
-      <%= f.label :postal_code, "郵便番号(ハイフンなし)" %>
-      <%= f.text_field :postal_code %>
+    <div class="field">
+      <%= f.label :name, "宛名" %>
+      <%= f.text_field :name, placeholder: "長野惠喜" %>
     </div>
-    <div>
+    <div class="field">
+      <%= f.label :postal_code, "郵便番号" %>
+      <%= f.text_field :postal_code, placeholder: "1234567" %>
+    </div>
+    <div class="field">
       <%= f.label :address, "住所" %>
-      <%= f.text_area :address %>
+      <%= f.text_field :address, placeholder: "東京都千代田区千代田1-1" %>
     </div>
   </div>
   <%= f.submit "確認画面に進む" %>
-<% end %>
+  <% end %>

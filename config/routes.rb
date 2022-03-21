@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     #public/items
     get 'items/genre/:id' => "items#genre", as: "items_genre"
+    get 'items/search' => "items#search"
     resources :items, only: [:index, :show]
 
     #public/cart_items

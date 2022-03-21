@@ -1,2 +1,7 @@
-<h1>Public::Items#index</h1>
-<p>Find me in app/views/public/items/index.html.erb</p>
+<%= render "genre" %>
+<h2><%= @title %><span>(全<%= @items_count %>件)</span></h2>
+<% if @items_count == 0 %>
+商品が見つかりませんでした。
+<% end %>
+<%= render "list", items: @items %>
+<%= paginate @items %>

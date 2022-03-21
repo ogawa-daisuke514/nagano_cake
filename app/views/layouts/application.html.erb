@@ -26,6 +26,13 @@
             <div><%= link_to "ジャンル一覧", admin_genres_path %></div>
             <div><%= link_to "ログアウト", destroy_admin_session_path, method: :delete  %></div>
           </nav>
+          <!-- admin用検索-->
+          <div>
+            <%= form_with url: items_search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search_word, placeholder: "商品名で検索" %>
+              <%= f.submit "検索" %>
+            <% end %>
+          </div>
         <% elsif customer_signed_in? %>
           <div>
             <%= "ようこそ、#{current_customer.last_name} さん" %>
@@ -36,6 +43,12 @@
             <div><%= link_to "カート", cart_items_path %></div>
             <div><%= link_to "ログアウト", destroy_customer_session_path, method: :delete %></div>
           </nav>
+          <div>
+            <%= form_with url: items_search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search_word, placeholder: "商品名で検索" %>
+              <%= f.submit "検索" %>
+            <% end %>
+          </div>
         <% else %>
           <nav>
             <div><%= link_to "About", about_path %></div>
@@ -43,10 +56,13 @@
             <div><%= link_to "新規登録", new_customer_registration_path %></div>
             <div><%= link_to "ログイン", new_customer_session_path %></div>
           </nav>
+          <div>
+            <%= form_with url: items_search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :search_word, placeholder: "商品名で検索" %>
+              <%= f.submit "検索" %>
+            <% end %>
+          </div>
         <% end %>
-        <div>
-          (検索窓)
-        </div>
       </div>
     </header>
     <main>

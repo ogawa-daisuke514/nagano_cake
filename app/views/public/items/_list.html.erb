@@ -1,7 +1,11 @@
 <div>
   <% items.each do |i| %>
   <div>
-    <div><%= image_tag i.get_image(200, 300) %></div>
+    <div>
+      <%= link_to item_path(i) do %>
+        <%= image_tag i.get_image(300, 200) %>
+      <% end %>
+    </div>
     <div><%= "￥" + i.tax_included_price.to_s(:delimited) %></div>
     <div><%= i.name %></div>
   </div>
