@@ -3,6 +3,11 @@ class Admin::OrderItemsController < ApplicationController
   def update
     order_item = OrderItem.find(params[:id])
     order_item.update(admin_order_item_params)
+    od = order_item.order
+    if order_item.production_status != "disabled"
+      st = Order.order_statuses.key(od.production_order_status)
+      od.update(order_status: st)
+    end
     redirect_to admin_order_path(order_item.order)
   end
 

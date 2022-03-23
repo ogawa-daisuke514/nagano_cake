@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   has_many :order_items
 
   attribute :order_status, :integer, default: 0
+  attribute :payment_method, :integer, default: 0
 
   enum payment_method: { credit_card: 0, transfer: 1 }
   enum order_status: { wait_for_deposit: 0, confirmed_deposit: 1, in_production: 2, in_packing: 3, shipped: 4 }
@@ -13,6 +14,30 @@ class Order < ApplicationRecord
   validates :postage, presence: true
   validates :total_fee, presence: true
   validates :payment_method, presence: true
+
+  def production_order_status
+    ois = order_items.map{|oi| OrderItem.production_statuses[oi.production_status] }
+    return 1 if ois.max <= 1
+    return 3 if ois.min >= 3
+    return 2
+  end
+
+  def valid_status_nums
+    os_num = Order.order_statuses[order_status]
+    return [0, 1] if os_num == 0
+    case production_order_status
+    when 1
+      return [0, 1]
+    when 2
+      return [2]
+    when 3
+      return [3, 4]
+    end
+  end
+
+  def valid_status
+    valid_status_nums.map{|vn| Order.order_statuses.key(vn) }
+  end
 
   def now_postage
     800

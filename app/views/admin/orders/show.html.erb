@@ -20,7 +20,9 @@
   <div>注文ステータス</div>
   <div>
   <%= form_with model: @order, url: admin_order_path(@order), method: :patch do |f| %>
-    <%= f.select :order_status, Order.order_statuses_i18n.invert %>
+    <%= f.select :order_status, @order.valid_status.map{|s|
+      [Order.order_statuses_i18n[s], s]
+    } %>
     <%= f.submit "更新" %>
   <% end %>
   </div>
@@ -39,12 +41,14 @@
       <% @order.order_items.each do |oi| %>
       <tr>
         <td><%= oi.item.name %></td>
-        <td><%= oi.tax_included_price %></td>
+        <td><%= oi.tax_included_price.to_s(:delimited) %></td>
         <td><%= oi.amount %></td>
         <td><%= oi.subtotal %></td>
         <td>
           <%= form_with model: oi, url: admin_order_item_path(oi), method: :patch do |f| %>
-            <%= f.select :production_status, OrderItem.production_statuses_i18n.invert %>
+            <%= f.select :production_status, oi.valid_status.map{|s|
+              [OrderItem.production_statuses_i18n[s], s]
+            } %>
             <%= f.submit "更新" %>
           <% end %>
         </td>

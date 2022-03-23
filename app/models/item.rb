@@ -4,6 +4,12 @@ class Item < ApplicationRecord
   has_many :cart_items
   has_many :order_items
 
+  validates :name, presence: true
+  validates :introduction, presence: true
+  validates :price, presence: true
+  validates :is_active, presence: true
+  validates :image, presence: true
+
   def tax_rate
     1.1
   end
