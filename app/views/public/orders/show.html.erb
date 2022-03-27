@@ -1,60 +1,65 @@
-<h2>注文履歴詳細</h2>
-<div>
-  <h3>注文情報</h3>
-  <table>
-    <tbody>
-      <tr>
-        <td>注文日</td>
-        <td><%= @order.created_at.strftime("%Y/%m/%d")%></td>
-      </tr>
-      <tr>
-        <td>配送先</td>
-        <td>
-          <%= "〒#{@order.postal_code}" %><br>
-          <%= @order.address %><br>
-          <%= @order.name %>
-        </td>
-      <tr>
-      <tr>
-        <td>支払方法</td>
-        <td><%= @order.payment %></td>
-      </tr>
-      </tr>
-        <td>ステータス</td>
-        <td><%= @order.od_status %></td>
-      </tr>
-    </tbody>
-  </table>
+<h2></h2>
+<%= render "layouts/section", title: "注文履歴詳細" %>
+<div class="row">
+  <div class="col-8">
+    <b>注文情報</b>
+    <table class="table table-bordered mb-auto">
+      <tbody>
+        <tr>
+          <td class="bg-light">注文日</td>
+          <td><%= @order.created_at.strftime("%Y/%m/%d")%></td>
+        </tr>
+        <tr>
+          <td class="bg-light">配送先</td>
+          <td>
+            <%= "〒#{@order.postal_code}" %><br>
+            <%= @order.address %><br>
+            <%= @order.name %>
+          </td>
+        <tr>
+        <tr>
+          <td class="bg-light">支払方法</td>
+          <td><%= @order.payment %></td>
+        </tr>
+        </tr>
+          <td class="bg-light">ステータス</td>
+          <td><%= @order.od_status %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-4">
+    <b>請求情報</b>
+    <table class="table table-bordered mb-auto">
+      <tbody>
+        <tr>
+          <td class="bg-light">商品合計</td>
+          <td><%= @order.order_items.sum{|oi| oi.subtotal }.to_s(:delimited) %></td>
+        </tr>
+        <tr>
+          <td class="bg-light">配送料</td>
+          <td> <%= @order.postage.to_s(:delimited) %><br></td>
+        <tr>
+        <tr>
+          <th class="bg-light">ご請求額</th>
+          <td><%= @order.total_fee.to_s(:delimited) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-<div>
-  <h3>請求情報</h3>
-  <table>
+<div class="mt-5">
+  <b>注文内容</b>
+  <table class="table table-bordered col-10">
+    <thead class="thead-light">
+      <tr>
+        <th>商品</th>
+        <th>単価(税込)</th>
+        <th>個数</th>
+        <th>小計</th>
+      </tr>
+    </thead>
     <tbody>
-      <tr>
-        <td>商品合計</td>
-        <td><%= @order.order_items.sum{|oi| oi.subtotal }.to_s(:delimited) %></td>
-      </tr>
-      <tr>
-        <td>配送料</td>
-        <td> <%= @order.postage.to_s(:delimited) %><br></td>
-      <tr>
-      <tr>
-        <td>ご請求額</td>
-        <td><%= @order.total_fee.to_s(:delimited) %></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div>
-  <h3>注文内容</h3>
-  <table>
-    <tbody>
-      <tr>
-        <td>商品</td>
-        <td>単価(税込)</td>
-        <td>個数</td>
-        <td>小計</td>
-      </tr>
       <% @order.order_items.each do |oi| %>
       <tr>
         <td> <%= oi.item.name %><br></td>

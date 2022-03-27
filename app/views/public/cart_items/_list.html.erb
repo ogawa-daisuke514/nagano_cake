@@ -1,7 +1,7 @@
-<table>
-  <thead>
+<table class="table table-bordered">
+  <thead class="thead-light">
     <tr>
-      <th>商品名</th>
+      <th colspan="2">商品名</th>
       <th>単価(税込)</th>
       <th>数量</th>
       <th>小計</th>
@@ -13,21 +13,23 @@
   <tbody>
     <% current_customer.cart_items.each do |ci| %>
     <tr>
-      <td><%= image_tag ci.item.get_image(60, 40) %><%= ci.item.name %></td>
-      <td><%= ci.item.tax_included_price.to_s(:delimited) %></td>
-      <td>
+      <td class="align-middle text-center"><%= image_tag ci.item.get_image(60, 40) %></td>
+      <td class="align-middle"><%= ci.item.name %></td>
+      <td class="align-middle"><%= ci.item.tax_included_price.to_s(:delimited) %></td>
+      <td class="align-middle">
       <% if editable %>
-        <%= form_with model: ci, url: cart_item_path(ci), method: :patch, local: true do |f| %>
-          <%= f.select :amount, *[1..(ci.amount+ci.amount_diff_max)] %>
-          <%= f.submit "変更" %>
+        <%= form_with model: ci, url: cart_item_path(ci), method: :patch, local: true,
+          class: "form-inline" do |f| %>
+          <%= f.select :amount, *[1..(ci.amount+ci.amount_diff_max)], {}, class: "form-control mr-1" %>
+          <%= f.submit "変更", class: "btn btn-sm btn-success" %>
         <% end %>
       <% else %>
         <%= ci.amount %>
       <% end %>
       </td>
-      <td><%= ci.subtotal.to_s(:delimited) %></td>
+      <td class="align-middle"><%= ci.subtotal.to_s(:delimited) %></td>
       <% if editable %>
-        <td><%= link_to "削除する", cart_item_path(ci), method: :delete %></td>
+        <td class="align-middle text-center"><%= link_to "削除する", cart_item_path(ci), method: :delete, class: "btn btn-sm btn-danger" %></td>
       <% end %>
     </tr>
     <% end %>

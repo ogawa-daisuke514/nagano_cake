@@ -1,19 +1,24 @@
-<div>
-  <%= render "genre" %>
-  <%= image_tag @item.get_image(450, 300) %>
-  <div>
-    <h2><%= @item.name %></h2>
+<div class="row my-4">
+  <div class="col-2">
+    <%= render "genre" %>
+  </div>
+  <div class="col-4 text-center">
+    <%= image_tag @item.get_image(300, 200) %>
+  </div>
+  <div class="col-6">
+    <h3><%= @item.name %></h3>
     <p><%= @item.introduction %></p>
     <div>
-      <span><%= "￥" + @item.tax_included_price.to_s(:delimited) %></span>
-      <span>(税込)</span>
+      <h3 class="d-inline"><%= "￥" + @item.tax_included_price.to_s(:delimited) %></h3>
+      <h6 class="d-inline">(税込)</h6>
     </div>
     <div>
-      <%= form_with model: @cart_item, url: cart_items_path, method: :post, local: true do |f| %>
+      <%= form_with model: @cart_item, url: cart_items_path, method: :post, local: true,
+        class: "form-inline m-4" do |f| %>
         <%= f.hidden_field :item_id, value: @item.id %>
-        <%= f.label :amount, "個数" %>
-        <%= f.select :amount, *[1..@cart_item.amount_diff_max] %>
-        <%= f.submit "カートに入れる" %>
+        <%= f.label :amount, "個数:", class: "d-inline-block" %>
+        <%= f.select :amount, *[1..@cart_item.amount_diff_max], {}, class: "form-control mx-3" %>
+        <%= f.submit "カートに入れる", class: "btn btn-success" %>
       <% end %>
     </div>
   </div>

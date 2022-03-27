@@ -35,6 +35,10 @@ class Customer < ApplicationRecord
     last_name + first_name
   end
 
+  def get_status_color(active)
+    active ? "text-success" : "text-muted"
+  end
+
   def status
     get_status_string(is_active)
   end

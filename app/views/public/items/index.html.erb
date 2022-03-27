@@ -1,7 +1,17 @@
-<%= render "genre" %>
-<h2><%= @title %><span>(全<%= @items_count %>件)</span></h2>
-<% if @items_count == 0 %>
-商品が見つかりませんでした。
-<% end %>
-<%= render "list", items: @items %>
-<%= paginate @items %>
+<div class="row my-4">
+  <div class="col-2">
+    <%= render "genre" %>
+  </div>
+  <div class="col-10">
+    <div class="my-4">
+      <h2 class="d-inline-block m-2"><%= @title %></h2><span>(全<%= @items_count %>件)</span>
+    </div>
+    <% if @items_count == 0 %>
+    商品が見つかりませんでした。
+    <% end %>
+    <div class="row col-12">
+      <%= render "list", items: @items %>
+    </div>
+    <%= paginate @items %>
+  </div>
+</div>

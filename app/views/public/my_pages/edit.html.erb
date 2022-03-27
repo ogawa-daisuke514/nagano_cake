@@ -1,39 +1,9 @@
-<h2>会員情報編集</h2>
+<%= render "layouts/section", title: "会員情報編集" %>
+<%= render "layouts/error_messages", resource: current_customer %>
 <%= form_with(model: current_customer, url: my_page_path(current_customer), method: :patch, local: true) do |f| %>
-  <%= render "public/shared/error_messages", resource: current_customer %>
-
-  <div class="field">
-    <span>氏名</span>
-    <%= f.text_field :last_name, autofocus: true, placeholder: "長野", autocomplete: "last_name" %>
-    <%= f.text_field :first_name, placeholder: "惠喜", autocomplete: "first_name" %>
-  </div>
-  <div>
-    <span>フリガナ</span>
-    <%= f.text_field :last_name_kana, placeholder: "ナガノ", autocomplete: "last_name_kana" %>
-    <%= f.text_field :first_name_kana, placeholder: "ケイキ", autocomplete: "first_name_kana" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :postal_code, "郵便番号" %>
-    <%= f.text_field :postal_code, placeholder: "1234567", autocomplete: "postal_code" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address, "住所" %>
-    <%= f.text_field :address, placeholder: "東京都千代田区千代田1-1", autocomplete: "address" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :telephone_number, "電話番号" %>
-    <%= f.text_field :telephone_number, placeholder: "09012345678", autocomplete: "telephone_number" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %>
-    <%= f.email_field :email, placeholder: "mail@example.com", autocomplete: "email" %>
-  </div>
-  <div class="actions">
-    <%= f.submit "編集内容を保存" %>
-    <%= link_to "退会する", my_page_withdraw_confirm_path %>
+  <%= render "admin/customers/form", f: f %>
+  <div class="actions row">
+    <%= f.submit "編集内容を保存", class: "btn btn-success ml-auto" %>
+    <%= link_to "退会する", my_page_withdraw_confirm_path, class: "btn btn-danger ml-5 mr-auto" %>
   </div>
 <% end %>

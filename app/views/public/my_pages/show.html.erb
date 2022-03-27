@@ -1,41 +1,43 @@
-<h2>マイページ</h2>
-<div>
-  <h2>登録情報</h2>
-  <%= link_to "編集する", edit_my_page_path %>
+<%= render "layouts/section", title: "マイページ" %>
+<div class="row">
+  <h4 class="my-auto col-2">登録情報</h4>
+  <%= link_to "編集する", edit_my_page_path, class: "btn btn-success my-auto ml-4" %>
 </div>
-<table>
-  <tbody>
-    <tr>
-      <td>氏名</td>
-      <td><%= current_customer.last_name %> <%= current_customer.first_name %></td>
-    </tr>
-    <tr>
-      <td>カナ</td>
-      <td><%= current_customer.last_name_kana %> <%= current_customer.first_name_kana %></td>
-    </tr>
-    <tr>
-      <td>郵便番号</td>
-      <td><%= current_customer.postal_code %></td>
-    </tr>
-    <tr>
-      <td>住所</td>
-      <td><%= current_customer.address %></td>
-    </tr>
-    <tr>
-      <td>電話番号</td>
-      <td><%= current_customer.telephone_number %></td>
-    </tr>
-    <tr>
-      <td>メールアドレス</td>
-      <td><%= current_customer.email %></td>
-    </tr>
-  </tbody>
-</table>
-<div>
-  <h2>配送先</h2>
-  <%= link_to "一覧を見る", addresses_path %>
+<div class="row my-4">
+  <table class="table table-bordered col-8">
+    <tbody>
+      <tr>
+        <th class="bg-light">氏名</th>
+        <td><%= current_customer.last_name %> <%= current_customer.first_name %></td>
+      </tr>
+      <tr>
+        <th class="bg-light">カナ</th>
+        <td><%= current_customer.last_name_kana %> <%= current_customer.first_name_kana %></td>
+      </tr>
+      <tr>
+        <th class="bg-light">郵便番号</th>
+        <td><%= current_customer.postal_code %></td>
+      </tr>
+      <tr>
+        <th class="bg-light">住所</th>
+        <td><%= current_customer.address %></td>
+      </tr>
+      <tr>
+        <th class="bg-light">電話番号</th>
+        <td><%= current_customer.telephone_number %></td>
+      </tr>
+      <tr>
+        <th class="bg-light">メールアドレス</th>
+        <td><%= current_customer.email %></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div>
-  <h2>注文履歴</h2>
-  <%= link_to "一覧を見る", orders_path %>
+<div class="row">
+  <h4 class="col-2">配送先</h4>
+  <%= link_to "一覧を見る", addresses_path, class: "btn btn-primary my-auto" %>
+</div>
+<div class="row mt-4">
+  <h4 class="col-2">注文履歴</h4>
+  <%= link_to "一覧を見る", orders_path, class: "btn btn-primary my-auto" %>
 </div>

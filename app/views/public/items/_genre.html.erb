@@ -1,11 +1,11 @@
-<table>
+<table class="table table-sm table-borderless border">
   <thead>
-    <tr><th> ジャンル検索 </th></tr>
+    <tr><th class="text-center"> ジャンル検索 </th></tr>
     </thead>
   <tbody>
     <% Genre.all.each do |g| %>
     <tr>
-      <td><%= link_to g.name, items_genre_path(g) %></td>
+      <td><%= link_to g.name, items_genre_path(g), class: "text-dark" %></td>
     </tr>
     <% end %>
   </tbody>

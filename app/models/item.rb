@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :introduction, presence: true
   validates :price, presence: true
-  validates :is_active, presence: true
+  validates :is_active, inclusion: [true, false]
   validates :image, presence: true
 
   def tax_rate
@@ -20,6 +20,10 @@ class Item < ApplicationRecord
 
   def get_image(w, h)
     image.variant(resize_to_limit: [w, h]).processed
+  end
+
+  def status_color(active)
+    active ? "text-success" : "text-muted"
   end
 
   def status

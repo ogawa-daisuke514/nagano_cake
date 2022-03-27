@@ -1,13 +1,11 @@
-<div>
-  <% items.each do |i| %>
-  <div>
-    <div>
-      <%= link_to item_path(i) do %>
-        <%= image_tag i.get_image(300, 200) %>
-      <% end %>
-    </div>
-    <div><%= "￥" + i.tax_included_price.to_s(:delimited) %></div>
-    <div><%= i.name %></div>
+<% items.each do |i| %>
+<div class="col-3">
+  <div class="text-center">
+    <%= link_to item_path(i) do %>
+      <%= image_tag i.get_image(210, 140) %>
+    <% end %>
   </div>
-  <% end %>
+  <div class="my-3"><b><%= i.name %></b></div>
+  <div><b><%= "￥" + i.tax_included_price.to_s(:delimited) %></b></div>
 </div>
+<% end %>

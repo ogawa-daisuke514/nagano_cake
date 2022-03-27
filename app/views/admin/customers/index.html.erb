@@ -1,6 +1,6 @@
-<h1>会員一覧</h1>
-<table>
-  <thead>
+<%= render "layouts/section", title: "会員一覧" %>
+<table class="table">
+  <thead class="thead-light">
     <tr>
       <th>会員ID</th>
       <th>氏名</th>
@@ -12,9 +12,9 @@
     <% @customers.each do |c| %>
     <tr>
       <td><%= c.id %></td>
-      <td><%= link_to c.full_name, admin_customer_path(c) %></td>
+      <td><u><%= link_to c.full_name, admin_customer_path(c), class: "text-dark" %></u></td>
       <td><%= c.email %></td>
-      <td><%= c.status %></td>
+      <td><%= render "status", customer: c %></td>
     </tr>
     <% end %>
   </tbody>

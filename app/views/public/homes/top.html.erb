@@ -1,19 +1,29 @@
-<div>
-  <div>
+<div class="row mt-4">
+  <div class="col-2">
     <%= render "public/items/genre" %>
   </div>
-  <div>
-    <div>
+  <div class="col-10">
+    <div class="w-100 p-5"
+      style="background-image: url('<%= asset_path("top.webp") %>'); background-size: cover;">
       <!-- BG IMAGE -->
-      <p>
-        ようこそ、ながのCAKEへ！<br/>
-        このサイトは、ケーキ販売のECサイトになります。<br/>
-        会員でない方も商品の閲覧はできますが、<br/>
-        購入には会員登録が必要になります。
-      </p>
+      <div class="p-2 d-inline-block"
+        style="background-color: rgba(0, 0, 0, 0.7);">
+        <p class="text-light">
+          ようこそ、ながのCAKEへ！<br/>
+          このサイトは、ケーキ販売のECサイトになります。<br/>
+          会員でない方も商品の閲覧はできますが、<br/>
+          購入には会員登録が必要になります。
+        </p>
+      </div>
     </div>
-    <h1>新着商品</h1>
-    <%= render "public/items/list", items: @new_items %>
-    <%= link_to "すべての商品を見る", items_path %>
   </div>
+</div>
+<div class="offset-2 my-3">
+  <h3>新着商品</h3>
+</div>
+<div class="row offset-2 col-10">
+  <%= render "public/items/list", items: @new_items %>
+</div>
+<div class="text-right">
+  <%= link_to "すべての商品を見る >", items_path %>
 </div>

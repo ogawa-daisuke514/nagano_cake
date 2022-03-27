@@ -1,35 +1,43 @@
-<h2>注文情報確認</h2>
-<%= render "public/cart_items/list", editable: false %>
-<table>
-  <tbody>
-    <tr>
-      <td>送料</td>
-      <td><%= @order.postage.to_s(:delimited) %></td>
-    </tr>
-    <tr>
-      <td>商品合計</td>
-      <td><%= current_customer.cart_total.to_s(:delimited) %></td>
-    </tr>
-    <tr>
-      <td>請求金額</td>
-      <td><%= @order.total_fee.to_s(:delimited) %></td>
-    </tr>
-  </tbody>
-</table>
-<div>
-  <div>支払方法</div>
-  <div><%= @order.payment %></div>
-</div>
-<div>
-  <div>お届け先</div>
-  <div>
-    <%= @order.address_display(false) %><br>
-    <%= @order.name %>
+<%= render "layouts/section", title: "注文情報確認" %>
+<div class="row">
+  <div class="col-9">
+    <%= render "public/cart_items/list", editable: false %>
   </div>
+  <table class="col-3 table table-bordered mt-auto">
+    <tbody>
+      <tr>
+        <th class="bg-light">送料</th>
+        <td><%= @order.postage.to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <th class="bg-light">商品合計</th>
+        <td><%= current_customer.cart_total.to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <th class= "bg-light">請求金額</th>
+        <td><%= @order.total_fee.to_s(:delimited) %></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<%= form_with model: @order, url: orders_path, method: :post, local: true do |f| %>
-  <% [:name, :postal_code, :address, :postage, :total_fee, :order_status, :payment_method].each do |param| %>
-     <%= f.hidden_field param, value: @order.send(param) %>
+<table class="table table-borderless">
+  <tr>
+    <th>支払方法</th>
+    <td><%= @order.payment %></td>
+  </tr>
+  <tr>
+    <th>お届け先</th>
+    <td>
+      <%= @order.address_display(false) %><br>
+      <%= @order.name %>
+    </td>
+  </tr>
+</table>
+<div class="text-center">
+  <%= form_with model: @order, url: orders_path, method: :post, local: true do |f| %>
+    <% [:name, :postal_code, :address, :postage, :total_fee, :order_status, :payment_method].each do |param| %>
+       <%= f.hidden_field param, value: @order.send(param) %>
+    <% end %>
+    <%= f.submit "注文を確定する", class: "btn btn-success" %>
   <% end %>
-  <%= f.submit "注文を確定する" %>
-<% end %>
+</div>

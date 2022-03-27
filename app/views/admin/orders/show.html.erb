@@ -1,33 +1,42 @@
-<h2>注文履歴詳細</h2>
-<div>
-  <div>購入者</div>
-  <div><%= link_to @order.customer.full_name, admin_customer_path(@order.customer) %></div>
-</div>
-<div>
-  <div>注文日</div>
-  <div><%= @order.created_at.strftime('%Y/%m/%d') %></div>
-</div>
-<div>
-  <div>配送先</div>
-  <div><%= @order.address_display(false) %></div>
-  <div><%= @order.name %></div>
-</div>
-<div>
-  <div>支払方法</div>
-  <div><%= @order.payment %></div>
-</div>
-<div>
-  <div>注文ステータス</div>
-  <div>
-  <%= form_with model: @order, url: admin_order_path(@order), method: :patch do |f| %>
-    <%= f.select :order_status, @order.valid_status.map{|s|
-      [Order.order_statuses_i18n[s], s]
-    } %>
-    <%= f.submit "更新" %>
-  <% end %>
-  </div>
-  <table>
-    <thead>
+<%= render "layouts/section", title: "注文履歴詳細" %>
+<table class="table table-borderless">
+  <tbody>
+    <tr>
+      <th>購入者</th>
+      <td><u><%= link_to @order.customer.full_name, admin_customer_path(@order.customer), class: "text-dark" %></u></td>
+    </tr>
+    <tr>
+      <th>注文日</th>
+      <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+    </tr>
+    <tr>
+      <th>配送先</th>
+      <td>
+        <%= @order.address_display(false) %><br>
+        <%= @order.name %>
+      </td>
+    </tr>
+    <tr>
+      <th>支払方法</th>
+      <td><%= @order.payment %></td>
+    </tr>
+    <tr>
+      <th>注文ステータス</th>
+      <td>
+      <%= form_with model: @order, url: admin_order_path(@order), method: :patch,
+        class: "form-inline" do |f| %>
+        <%= f.select :order_status, @order.valid_status.map{|s|
+          [Order.order_statuses_i18n[s], s]
+        }, {}, class: "form-control" %>
+        <%= f.submit "更新", class: "btn btn-success ml-3" %>
+      <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="row">
+  <table class="table col-9">
+    <thead class="thead-light">
       <tr>
         <th>商品名</th>
         <th>単価(税込)</th>
@@ -43,17 +52,34 @@
         <td><%= oi.item.name %></td>
         <td><%= oi.tax_included_price.to_s(:delimited) %></td>
         <td><%= oi.amount %></td>
-        <td><%= oi.subtotal %></td>
+        <td><%= oi.subtotal.to_s(:delimited) %></td>
         <td>
-          <%= form_with model: oi, url: admin_order_item_path(oi), method: :patch do |f| %>
+          <%= form_with model: oi, url: admin_order_item_path(oi), method: :patch,
+            class: "form-inline" do |f| %>
             <%= f.select :production_status, oi.valid_status.map{|s|
               [OrderItem.production_statuses_i18n[s], s]
-            } %>
-            <%= f.submit "更新" %>
+            }, {}, class: "form-control" %>
+            <%= f.submit "更新", class: "btn btn-success ml-3" %>
           <% end %>
         </td>
       </tr>
       <% end %>
+    </tbody>
+  </table>
+  <table class="table table-sm table-borderless col-3 mt-auto">
+    <tbody>
+      <tr>
+        <th>商品合計</th>
+        <td><%= @order.order_items.sum{|oi| oi.subtotal }.to_s(:delimited) %>円</td>
+      </tr>
+      <tr>
+        <th>送料</th>
+        <td><%= @order.postage.to_s(:delimited) %>円</td>
+      </tr>
+      <tr>
+        <th>請求金額合計</th>
+        <td><b><%= @order.total_fee.to_s(:delimited) %>円</b></td>
+      </tr>
     </tbody>
   </table>
 </div>

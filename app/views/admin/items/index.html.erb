@@ -1,7 +1,9 @@
-<h1>商品一覧</h1>
-<%= link_to "+", new_admin_item_path %>
-<table>
-  <thead>
+<div class="row">
+<%= render "layouts/section", title: (@title + "(全#{@items_count}件)") %>
+<%= link_to "+", new_admin_item_path, class: "btn text-secondary rounded-circle shadow-sm btn-light m-4 ml-auto" %>
+</div>
+<table class="table">
+  <thead class="thead-light">
     <tr>
       <th>商品ID</th>
       <th>商品名</th>
@@ -14,10 +16,10 @@
     <% @items.each do |i| %>
     <tr>
       <td><%= i.id %></td>
-      <td><%= link_to i.name, admin_item_path(i) %></td>
+      <td><u><%= link_to i.name, admin_item_path(i), class: "text-dark" %></u></td>
       <td><%= i.price.to_s(:delimited) %></td>
       <td><%= i.genre.name %></td>
-      <td><%= i.status %></td>
+      <td><%= render "status", item: i %></td>
     </tr>
     <% end %>
   </tbody>

@@ -1,23 +1,26 @@
 <h2>ログイン</h2>
-<h3>会員の方はこちらからログイン</h3>
+<%= render "layouts/section", title: "会員の方はこちらからログイン" %>
 <div>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <%= render "layouts/error_messages", resource: resource %>
+  <div class="field form-inline my-2 row">
+    <%= f.label :email, "メールアドレス", class: "col-2" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",
+        class: "form-control col-4" %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+  <div class="field form-inline my-2 row">
+    <%= f.label :password, "パスワード", class: "col-2" %><br />
+    <%= f.password_field :password, autocomplete: "current-password",
+        class: "form-control col-4" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "ログイン" %>
+    <%= f.submit "ログイン", class: "btn btn-primary offset-2" %>
   </div>
 <% end %>
 </div>
-<h3>会員登録がお済みでない方</h3>
+<%= render "layouts/section", title: "会員登録がお済みでない方" %>
 <p>
   <span><%= link_to "こちら", new_customer_registration_path %></span>から新規登録してください。
 </p>

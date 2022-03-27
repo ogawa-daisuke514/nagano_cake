@@ -1,47 +1,23 @@
-<h1><%= "#{@customer.last_name}#{@customer.first_name}さんの会員情報編集" %></h1>
+<%= render "layouts/section", title: @customer.full_name + "さんの会員情報編集" %>
+<%= render "layouts/error_messages", resource: @customer %>
 <%= form_with(model:@customer, url: admin_customer_path(@customer), method: :patch, local: true) do |f| %>
-  <%= render "public/shared/error_messages", resource: @customer %>
 
-  <div class="field">
-    <span>氏名</span>
-    <%= f.text_field :last_name, autofocus: true, placeholder: "長野", autocomplete: "last_name" %>
-    <%= f.text_field :first_name, placeholder: "惠喜", autocomplete: "first_name" %>
+  <div class="field row m-2">
+    <div class="col-3">会員ID</div>
+    <div class="col-9"><%= @customer.id %></div>
   </div>
-  <div>
-    <span>フリガナ</span>
-    <%= f.text_field :last_name_kana, placeholder: "ナガノ", autocomplete: "last_name_kana" %>
-    <%= f.text_field :first_name_kana, placeholder: "ケイキ", autocomplete: "first_name_kana" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :postal_code, "郵便番号(ハイフンなし)" %>
-    <%= f.text_field :postal_code, placeholder: "1234567", autocomplete: "postal_code" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address, "住所" %>
-    <%= f.text_field :address, placeholder: "東京都千代田区千代田1-1", autocomplete: "address" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :telephone_number, "電話番号(ハイフンなし)" %>
-    <%= f.text_field :telephone_number, placeholder: "09012345678", autocomplete: "telephone_number" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %>
-    <%= f.email_field :email, placeholder: "mail@example.com", autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :is_active, "会員ステータス" %>
+  <%= render "form", f: f %>
+  <div class="field row form-inline m-2">
+    <%= f.label :is_active, "会員ステータス", class: "col-3 justify-content-start" %>
+    <div class="form-check">
     <% [true, false].each do |st| %>
-      <%= f.radio_button :is_active, st %>
-      <%= f.label :is_active, @customer.get_status_string(st) %>
+      <%= f.radio_button :is_active, st, class: "form-check-input" %>
+      <%= f.label :is_active, @customer.get_status_string(st), class: "form-check-label mr-3" %>
     <% end %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit "変更を保存" %>
+  <div class="actions text-center my-4">
+    <%= f.submit "変更を保存", class: "btn btn-success" %>
   </div>
 <% end %>

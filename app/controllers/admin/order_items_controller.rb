@@ -8,7 +8,7 @@ class Admin::OrderItemsController < ApplicationController
       st = Order.order_statuses.key(od.production_order_status)
       od.update(order_status: st)
     end
-    redirect_to admin_order_path(order_item.order)
+    redirect_to admin_order_path(order_item.order), notice: "制作ステータスを正常に更新しました。"
   end
 
   private

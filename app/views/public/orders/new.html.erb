@@ -1,41 +1,51 @@
+<%= render "layouts/error_messages", resource: @order %>
+<%= render "layouts/section", title: "注文情報入力" %>
 <%= form_with model: @order, url: orders_confirm_path, local: true, method: :post, local: true do |f| %>
-  <h2>支払方法</h2>
+  <h5>支払方法</h5>
   <% Order.payment_methods.each do |k, v| %>
-    <%= f.radio_button :payment_method, k %>
-    <%= f.label :payment_method, Order.payment_methods_i18n[k] %>
+    <div class="form-check ml-4">
+      <%= f.radio_button :payment_method, k, class: "form-check-input" %>
+      <%= f.label :payment_method, Order.payment_methods_i18n[k], class: "form-check-label" %>
+    </div>
   <% end %>
-  <h2>お届け先</h2>
-  <div>
+  <h5 class="mt-3">お届け先</h5>
+  <div class="form-check ml-4 mb-3">
+    <%= f.radio_button :address_type, 0, checked: @address_type == 0, class: "form-check-input" %>
+    <%= f.label :address_type, "ご自身の住所", class: "form-check-label" %>
     <div>
-      <%= f.radio_button :address_type, 0, checked: @address_type == 0 %>
-      <%= f.label :address_type, "ご自身の住所" %>
+      <%= current_customer.address_display(false) %><br/>
+      <%= current_customer.full_name %>
     </div>
-    <div><%= current_customer.address_display(false) %></div>
-    <div><%= current_customer.full_name %></div>
   </div>
-  <div>
+  <div class="form-check ml-4 mb-3">
     <% empty = (current_customer.addresses.size == 0) %>
-    <%= f.radio_button :address_type, 1, disabled: empty, checked: @address_type == 1 %>
-    <%= f.label :address_type, "登録済み住所から選択" %><br>
-    <%= f.select :address_id, options_from_collection_for_select(current_customer.addresses, :id, :address_one_line) %>
-  </div>
-  <div>
+    <%= f.radio_button :address_type, 1, disabled: empty, checked: @address_type == 1, class: "form-check-input" %>
+    <%= f.label :address_type, "登録済み住所から選択", class: "form-check-label" %>
     <div>
-      <%= f.radio_button :address_type, 2, checked: @address_type == 2 %>
-      <%= f.label :address_type, "新しいお届け先" %>
-    </div>
-    <div class="field">
-      <%= f.label :name, "宛名" %>
-      <%= f.text_field :name, placeholder: "長野惠喜" %>
-    </div>
-    <div class="field">
-      <%= f.label :postal_code, "郵便番号" %>
-      <%= f.text_field :postal_code, placeholder: "1234567" %>
-    </div>
-    <div class="field">
-      <%= f.label :address, "住所" %>
-      <%= f.text_field :address, placeholder: "東京都千代田区千代田1-1" %>
+      <%= f.select :address_id,
+        options_from_collection_for_select(current_customer.addresses, :id, :address_one_line),
+        {}, class: "form-control" %>
     </div>
   </div>
-  <%= f.submit "確認画面に進む" %>
+  <div class="form-check ml-4 mb-3">
+    <%= f.radio_button :address_type, 2, checked: @address_type == 2, class: "form-check-input" %>
+    <%= f.label :address_type, "新しいお届け先", class: "form-check-label" %>
+    <div>
+      <div class="field row form-inline">
+        <%= f.label :name, "宛名", class: "col-3 justify-content-start" %>
+        <%= f.text_field :name, placeholder: "長野惠喜", class: "form-control" %>
+      </div>
+      <div class="field row form-inline">
+        <%= f.label :postal_code, "郵便番号", class: "col-3 justify-content-start" %>
+        <%= f.text_field :postal_code, placeholder: "1234567", class: "form-control" %>
+      </div>
+      <div class="field row form-inline">
+        <%= f.label :address, "住所", class: "col-3 justify-content-start" %>
+        <%= f.text_field :address, placeholder: "東京都千代田区千代田1-1", class: "form-control col-8" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <%= f.submit "確認画面に進む", class: "btn btn-primary mx-auto" %>
+  </div>
   <% end %>

@@ -26,7 +26,7 @@ class Public::SessionsController < Devise::SessionsController
   def withdraw_destroy
     destroy
     #フラッシュメッセージを上書き
-    flash[:notice] = "正常に退会しました。"
+    flash[:notice] = "退会処理が完了しました。またのご利用をお待ちしています。"
   end
 
   # protected

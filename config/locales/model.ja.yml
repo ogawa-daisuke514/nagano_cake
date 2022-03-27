@@ -1,0 +1,52 @@
+ja:
+  activerecord:
+    models:
+      address: "配送先"
+      admin: "管理者情報"
+      cart_item: "カート内商品"
+      customer: "会員情報"
+      genre: "ジャンル"
+      item: "商品"
+      order_item: "注文詳細"
+      order: "注文"
+    attributes:
+      address:
+        name: "宛名"
+        postal_code: "郵便番号"
+        address: "住所"
+      admin:
+        email: "メールアドレス"
+        password: "パスワード"
+      cart_item:
+        amount: "個数"
+      customer:
+        email: "メールアドレス"
+        password: "パスワード"
+        first_name: "名"
+        last_name: "姓"
+        first_name_kana: "名(カナ)"
+        last_name_kana: "姓(カナ)"
+        postal_code: "郵便番号"
+        address: "住所"
+        telephone_number: "電話番号"
+        is_active: "会員ステータス"
+      genre:
+        name: "ジャンル名"
+      item:
+        name: "商品名"
+        image: "商品画像"
+        introduction: "商品説明"
+        price: "税抜価格"
+        is_active: "販売ステータス"
+      order_item:
+        tax_included_price: "税込価格"
+        amount: "個数"
+        production_status: "制作ステータス"
+      order:
+        postal_code: "郵便番号"
+        address: "住所"
+        name: "宛名"
+        payment_method: "支払方法"
+        postage: "送料"
+        total_fee: "支払金額"
+        order_status: "注文ステータス"

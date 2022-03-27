@@ -1,6 +1,6 @@
-<h1><%= title %></h1>
-<table>
-  <thead>
+<%= render "layouts/section", title: title %>
+<table class="table">
+  <thead class="thead-light">
     <tr>
       <th>購入日時</th>
       <% if show_customer %>
@@ -13,7 +13,7 @@
   <tbody>
     <% orders.each do |od| %>
     <tr>
-      <td><%= link_to od.created_at.strftime('%Y/%m/%d %T'), admin_order_path(od) %></td>
+      <td><u><%= link_to od.created_at.strftime('%Y/%m/%d %T'), admin_order_path(od), class:"text-dark underline" %></u></td>
       <% if show_customer %>
       <td><%= od.customer.full_name %></td>
       <% end %>

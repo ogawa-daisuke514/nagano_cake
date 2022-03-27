@@ -1,14 +1,15 @@
-  <div class="field">
-    <%= f.label :name, "宛名" %>
-    <%= f.text_field :name, placeholder: "長野惠喜", autocomplete: "name" %>
+  <div class="field row form-inline m-2">
+    <%= f.label :name, "宛名", class: "col-3 justify-content-start" %>
+    <%= f.text_field :name, placeholder: "長野惠喜", autocomplete: "name", class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= f.label :postal_code, "郵便番号(ハイフンなし)" %>
-    <%= f.text_field :postal_code, placeholder: "1234567", autocomplete: "postal_code" %>
+  <div class="field row form-inline m-2">
+    <%= f.label :postal_code, "郵便番号(ハイフンなし)", class: "col-3 justify-content-start" %>
+    <%= f.text_field :postal_code, placeholder: "1234567", autocomplete: "postal_code", class: "form-control col-6" %>
   </div>
 
-  <div class="field">
-    <%= f.label :address, "住所" %>
-    <%= f.text_field :address, placeholder: "東京都千代田区千代田1-1", autocomplete: "address" %>
+  <div class="field row form-inline m-2">
+    <%= f.label :address, "住所", class: "col-3 justify-content-start" %>
+    <%= f.text_field :address, placeholder: "東京都千代田区千代田1-1", autocomplete: "address", class: "form-control" %>
+    <%= f.submit submit, class: "btn btn-success offset-3" %>
   </div>

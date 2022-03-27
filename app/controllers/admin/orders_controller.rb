@@ -1,7 +1,7 @@
 class Admin::OrdersController < ApplicationController
   before_action :authenticate_admin!
   def index
-    @orders = Order.page(params[:page])
+    @orders = Order.all.order(created_at: "DESC").page(params[:page]).per(10)
   end
 
   def show
@@ -18,7 +18,7 @@ class Admin::OrdersController < ApplicationController
         end
       end
     end
-    redirect_to admin_order_path(@order)
+    redirect_to admin_order_path(@order), notice: "注文ステータスを正常に更新しました。"
   end
 
   private

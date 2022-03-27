@@ -44,14 +44,23 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    #admin/items
+    get 'items/search' => "items#search"
+    resources :items, except: [:destroy]
+    
     #admin/orders
     root to: "orders#index"
     resources :orders, only: [:index, :show, :update]
-    patch "order_items/:id" => "order_items#update", as: "order_item"
+    
+    #admin/customers
     get "customers/:id/orders" => "customers#orders", as: "customer_orders"
     resources :customers, only: [:index, :edit, :show, :update]
-    resources :items, except: [:destroy]
+    
+    #admin/genres
     resources :genres, only: [:index, :edit, :create, :update]
+    
+    #admin/order_items
+    patch "order_items/:id" => "order_items#update", as: "order_item"
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
